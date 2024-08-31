@@ -1,4 +1,4 @@
-Physics student
+Math and Physics student
 
 <!---
 EmanuelVdias/EmanuelVdias is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
