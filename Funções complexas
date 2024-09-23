@@ -1,0 +1,43 @@
+from manim import *
+
+class ComplexTransformation(MovingCameraScene):
+    def construct(self):
+        # Define o plano complexo no espaço xy
+        xy_plane = ComplexPlane(
+            x_range=[-15, 15, 1],  # Define o intervalo do eixo x
+            y_range=[-10, 10, 1],  # Define o intervalo do eixo y
+            background_line_style={"stroke_width": 2, "stroke_opacity": 0.5}  # Define espessura inicial das linhas
+        )
+        xy_plane.set_color(BLUE)  # Cor do plano xy
+
+        # Texto para o plano xy
+        xy_label = MathTex(r"z = x + yi").to_corner(UP + LEFT)
+
+        # Aparecimento do plano xy
+        self.play(Create(xy_plane), Write(xy_label))
+        self.wait(2)
+
+        # Define a transformação f(z) = z^2
+        def transformation(z):
+            return (z**2+1)/(z-complex(0,1))
+
+        # Texto para o plano uv
+        uv_label = MathTex(r"w = z^2 = u + vi").to_corner(UP + LEFT)
+
+        # Animação da transformação do plano
+        self.play(
+            xy_plane.animate.apply_complex_function(transformation),
+            Transform(xy_label, uv_label)
+        )
+        self.wait(2)
+
+        # Animação de desampliação (zoom out)
+        self.play(
+            self.camera.frame.animate.scale(4.0)  # Aumenta o campo de visão da câmera
+        )
+        self.wait(1)
+
+        # Reajusta a espessura das linhas após o zoom out para melhorar a definição
+        xy_plane.set_stroke(width=4)  # Aumenta a espessura das linhas
+        self.play(UpdateFromFunc(xy_plane, lambda mob: mob.set_stroke(width=4)))
+        self.wait(2)
