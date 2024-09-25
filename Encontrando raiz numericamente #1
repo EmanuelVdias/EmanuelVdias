@@ -1,0 +1,30 @@
+from numpy import sign
+
+def rootsearch(f, a, b, dx):
+    x_1 = a
+    f1 = f(x_1)
+    x_2 = a + dx
+    f2 = f(x_2)
+    
+    while sign(f1) == sign(f2):
+        x_1 = x_2
+        f1 = f2  # Corrigido: atualizar f1
+        x_2 = x_1 + dx
+        f2 = f(x_2)
+        
+        if x_1 >= b:
+            return None  # Nenhuma raiz encontrada no intervalo
+    
+    return x_1, x_2
+
+# Definindo a função x^2 - 2
+def f(x):
+    return x**2 - 2
+
+# Buscando raízes no intervalo [0, 2] com incremento 0.1
+result = rootsearch(f, 0, 2, 0.00001)
+
+if result:
+    print(f"Raiz encontrada no intervalo: {result}")
+else:
+    print("Nenhuma raiz encontrada no intervalo")
