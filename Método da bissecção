@@ -1,0 +1,26 @@
+import numpy as np
+
+def f(x):
+    return np.sqrt(x)-np.cos(x)
+
+a = float(input('Digito o primeiro valor do intervalo: '))
+b = float(input('Digite o segundo valor do intervalo: '))
+
+tolerancia = float(input('Digite a tolerância: '))
+
+if f(a)*f(b)>0:
+    print('Não há solução no intervalo')
+
+else:
+    while (b-a)> tolerancia:
+        c = (a+b)/2
+
+        if f(a)*f(c)<0:
+            b=c
+        elif f(b)*f(c)<0:
+            a=c
+        else:
+            print('A raíz é x={}'.format(c))
+
+print('Uma apropximação para a solução é: {}'.format(c) )
+
