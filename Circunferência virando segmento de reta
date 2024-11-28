@@ -1,0 +1,45 @@
+from manim import *
+
+class CircunferenciaParaLinha(Scene):
+    def construct(self):
+        # Definir os parâmetros da circunferência
+        raio = 0.5
+        circunferencia = Circle(radius=raio, color=BLUE)
+
+        # Adicionar a circunferência
+        self.play(Create(circunferencia))
+        self.wait(1)
+
+        centro = Dot([0,0,0])
+        centro_letra = Tex(r'C').next_to(centro,UP)
+        self.play(DrawBorderThenFill(centro))
+        self.play(Write(centro_letra))
+        # Adicionar uma linha vertical representando o corte
+        linha_corte = Line(
+            start=[0, 0, 0], end=[raio, 0, 0], color=YELLOW, stroke_width=3
+        )
+        self.play(Create(linha_corte))
+
+
+        # Texto r=4
+        text_1 = MathTex(r'r=1').next_to(linha_corte,DOWN)
+        self.play(Write(text_1))
+        self.wait(1)
+
+        # Transformar a circunferência em uma linha reta
+        linha_estendida = Line(
+            start=[-PI * raio, 0, 0], end=[PI * raio, 0, 0], color=BLUE
+        )
+        self.wait(3)
+        self.play(FadeOut(centro),FadeOut(centro_letra),FadeOut(text_1),
+            Transform(circunferencia, linha_estendida, path_arc=-PI / 2),
+            FadeOut(linha_corte),
+        )
+        self.wait(1)
+
+        # Adicionar marcações para mostrar o comprimento da linha
+        brace = Brace(linha_estendida, DOWN, color=WHITE)
+        texto_comprimento = brace.get_text(f"Comprimento = {2 * PI * raio:.2f}")
+
+        self.play(Create(brace), Write(texto_comprimento))
+        self.wait(2)
