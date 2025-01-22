@@ -1,0 +1,47 @@
+from manim import *
+
+class projeto(Scene): 
+    def construct(self):
+
+        # Integrais
+        texto_2 = MathTex(
+             r'\int_{-L}^{L}\sin\left( \frac{m\pi x}{L}  \right)\cos\left( \frac{n\pi x}{L} \right)dx='
+             r'0'
+         ).to_edge(UP)
+        self.play(Write(texto_2))
+        self.wait(3)
+
+        # Configuração dos eixos
+        axes = Axes(
+            x_range=[-PI, PI, 0.5],  # Intervalo x: -2π a 2π com espaçamento de π
+            y_range=[-1.5, 1.5, 0.5], # Intervalo y: -1.5 a 1.5 com espaçamento de 0.5
+            x_length=12,              # Largura dos eixos
+            y_length=4,               # Altura dos eixos
+            tips=False                # Sem pontas nos eixos
+         ).shift(DOWN * 1.7)           # Mover os eixos para baixo
+
+        axes_labels = axes.get_axis_labels(x_label="x", y_label="f(x)")
+
+        # Criação dos eixos
+        vertical_line = Line(start=axes.c2p(1, -1.5), end=axes.c2p(1, 1.5), color=RED)
+        vertical_line_2 = Line(start=axes.c2p(-1,-1.5),end=axes.c2p(-1,1.5),color=RED)
+
+        self.play(Create(axes), Write(axes_labels))
+        self.play(Create(vertical_line),Create(vertical_line_2))
+        func = lambda x: np.sin(3* PI* x)*np.cos(0 *PI*x)
+        grafico = axes.plot(func,color=BLUE)
+        self.play(Create(grafico))
+        area = axes.get_area(grafico,x_range=[-1,1],color=YELLOW,opacity=0.5)
+        self.play(DrawBorderThenFill(area))
+        texto = MathTex(r'\sin(3 \pi x) \cos (0 \pi x)').move_to(4*RIGHT+0.6*UP)
+        self.play(Write(texto))
+        for m in range(0,6):
+            texto_m = MathTex(r'\sin(3 \pi x) \cos ({} \pi x)'.format(m)).move_to(4*RIGHT+0.6*UP)
+            new_func = lambda x: np.sin(3* PI* x)*np.cos(m *PI*x)
+            novo_grafico = axes.plot(new_func,color=BLUE)
+            nova_area = axes.get_area(novo_grafico,x_range=[-1,1],color=YELLOW,opacity=0.5)
+            self.play(Transform(grafico,novo_grafico),Transform(area,nova_area),Transform(texto,texto_m))
+            self.wait(2)
+        self.play(FadeOut(texto_2),FadeOut(grafico),FadeOut(texto),FadeOut(area),FadeOut(vertical_line),FadeOut(vertical_line_2),FadeOut(axes),FadeOut(axes_labels))
+        self.wait(2)
+       
