@@ -1,0 +1,23 @@
+from manim import *
+
+class ElectronOrbit(Scene):
+    def construct(self):
+        # Criar núcleo do átomo
+        nucleus = Dot(point=ORIGIN, color=RED).scale(1.2)
+        self.add(nucleus)
+
+        # Criar órbita circular
+        orbit_radius = 2
+        orbit = Circle(radius=orbit_radius, color=WHITE, stroke_opacity=0.5)
+        self.add(orbit)
+
+        # Criar elétron
+        electron = Dot(color=BLUE).scale(0.5)
+        electron.move_to(orbit.point_at_angle(0))  # Posicionar na órbita
+
+        # Animação: elétron orbitando o núcleo
+        electron_orbit_animation = MoveAlongPath(electron, orbit, run_time=3, rate_func=linear)
+        
+        self.add(electron)
+        self.play(electron_orbit_animation, rate_func=linear)
+
