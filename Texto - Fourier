@@ -1,0 +1,15 @@
+from manim import *
+
+class ProjetoIC(Scene):
+    def construct(self):
+        # Criando a frase com quebras de linha
+        quote = Text("\"O estudo profundo da natureza\n"
+                     "é a fonte mais fértil das\n"
+                     "descobertas matemáticas.\"",font_size=44).move_to(UP)
+        author = Text("- Joseph Fourier", color=YELLOW,font_size=39).next_to(quote, DOWN, buff=0.5)
+        
+        # Animação
+        self.play(Write(quote), run_time=5)
+        self.wait(1)
+        self.play(Write(author), run_time=2)
+        self.wait(4)
