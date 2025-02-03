@@ -1,0 +1,101 @@
+from manim import *
+
+class ProjetoIC(Scene):
+    def construct(self):
+        # self.add(NumberPlane())
+        # Criando a frase com quebras de linha
+
+        # postulados de De Broglie
+        texto = MathTex(r'p=\frac{h}{\lambda}').move_to([-5,3,0])
+        texto_2 = MathTex(R'E=hf').move_to([-2,3,0])
+        caixa_1 = SurroundingRectangle(texto,color=YELLOW)
+        caixa_2 = SurroundingRectangle(texto_2,color=YELLOW)
+        self.play(Write(texto))
+        self.play(DrawBorderThenFill(caixa_1))
+        self.wait(0.5)
+        self.play(Write(texto_2))
+        self.play(DrawBorderThenFill(caixa_2))
+        self.wait(0.5)
+
+        # Energia
+        texto_3 = MathTex(r'E=\frac{p^{2}}{2m}+V').move_to([-4.3,1.5,0])
+        self.wait(2)
+        self.play(Write(texto_3))
+
+        # Energia indo para a origem
+        self.wait(3)
+        self.play(texto_3.animate.move_to(ORIGIN).scale(1.5))
+        self.wait(2)
+        self.play(Indicate(texto_2))
+        self.wait(1)
+        texto_4 = MathTex(r'hf=\frac{p^{2}}{2m}+V').scale(1.5)
+        self.play(Transform(texto_3,texto_4))
+        self.wait(2)
+        self.play(Indicate(texto))
+        self.wait(1)
+        texto_5 = MathTex(r'hf=\frac{h^2}{2m  \lambda^2}+V').scale(1.5)
+        self.play(Transform(texto_3,texto_5))
+
+        # Definições dos períodos
+
+        texto_6 = MathTex(r'k=\frac{2\pi}{\lambda}').move_to([0.5,3,0])
+        caixa_6 = SurroundingRectangle(texto_6,color=YELLOW)
+
+        texto_7 = MathTex(r'\omega=2\pi f}').move_to([4,3,0])
+        caixa_7 = SurroundingRectangle(texto_7,color=YELLOW)
+
+        self.play(Write(texto_6))
+        self.play(DrawBorderThenFill(caixa_6))
+
+        self.play(Write(texto_7))
+        self.play(DrawBorderThenFill(caixa_7))
+        self.wait(2)
+
+        self.play(Indicate(texto_6))
+        self.wait(1)
+
+        texto_8 = MathTex(r'\frac{\hbar^{2}k^{2}}{2m}+V=hf').scale(1.5)
+
+        self.play(Transform(texto_3,texto_8))
+        self.wait(2)
+
+        grupo_1 = VGroup(texto,texto_2,texto_6,texto_7,caixa_1,caixa_2,caixa_6,caixa_7)
+        self.play(FadeOut(grupo_1))
+        self.wait(2)
+
+
+        self.play(texto_3.animate.move_to([-4,3,0]).scale(0.8))
+        caixa_8 = SurroundingRectangle(texto_3,color=YELLOW)
+        self.play(DrawBorderThenFill(caixa_8))
+        self.wait(2)
+
+        texto_9 = MathTex(r'\Psi(x,t)=\sin(kx-\omega t)').move_to([1,3,0])
+        caixa_9 = SurroundingRectangle(texto_9,color=YELLOW)
+        self.play(Write(texto_9))
+        self.play(DrawBorderThenFill(caixa_9))
+        self.wait(2)
+
+        texto_10 = MathTex(r'\frac{\partial  \Psi}{\partial  t}=-\omega  \cos(kx-\omega  t)').move_to([-4,1,0])
+        self.play(Write(texto_10))
+        self.wait(2)
+
+        texto_11 = MathTex(r'\frac{\partial  \Psi}  {\partial  x}=k\cos(kx-\omega  t)').next_to(texto_10,DOWN)
+        self.play(Write(texto_11))
+
+        texto_12 = MathTex(r'\frac{\partial^{2}  \Psi}{\partial  x^{2}}=-k^{2}\sin(kx-\omega  t)').next_to(texto_11,DOWN)
+        self.play(Write(texto_12))
+        self.wait(2)
+
+        texto_13 = MathTex(r'\alpha  \frac{\partial^{2}\Psi}{\partial  x^{2}}+V(x,t)  \Psi(x,t)=\beta  \frac{\partial  \Psi}{\partial  t}').move_to([3,0,0])
+        self.play(Write(texto_13))
+        self.wait(2)
+        
+        self.play(Indicate(texto_9))
+        self.wait(1)
+        self.play(Indicate(texto_13))
+
+        texto_14 = MathTex(r'-\alpha  \sin(kx-\omega  t)k^{2}+\sin(kx-\omega  t)V_{0}=-\beta  \cos(kx-\omega  t)  \omega  ').move_to([0,-3,0])
+        self.play(Write(texto_14))
+
+        self.wait(3)    
+
