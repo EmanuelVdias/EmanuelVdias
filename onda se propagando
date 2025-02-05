@@ -1,0 +1,32 @@
+from manim import *
+
+class ProjetoIC(Scene):
+    def construct(self):
+        texto = MathTex(r'- \frac{\hbar^{2}}{2m} \frac{d^{2}\psi}{dx^2}=E\psi').move_to([-4,3,0])
+        texto_2 = MathTex(r'\Psi(x,t)=e^{i(kx-\omega t)}').move_to([4,3,0])
+        self.add(texto,texto_2)
+        self.wait(4)
+
+        # Criando os eixos
+        axes = Axes(
+            x_range=[-4, 4, 1],
+            y_range=[-2, 2, 1],
+            axis_config={"color": WHITE},
+        )
+
+        # Criando um ValueTracker para o tempo
+        time_tracker = ValueTracker(0)
+
+        # Função cosseno que se propaga para a direita
+        wave = always_redraw(
+            lambda: axes.plot(
+                lambda x: np.cos(2 * np.pi * (x - time_tracker.get_value())),
+                color=BLUE
+            )
+        )
+
+        # Adicionando os elementos à cena
+        self.play(Create(wave))
+
+        # Animando a onda propagando ao longo do tempo
+        self.play(time_tracker.animate.set_value(15), run_time=15, rate_func=linear)
