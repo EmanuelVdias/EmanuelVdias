@@ -1,0 +1,52 @@
+from manim import *
+
+class ProjetoIC(Scene):
+    def construct(self):
+        
+        eixos = Axes(
+            x_range=[-60,60,1],
+            y_range=[-2,2,1]
+        )
+
+        cosseno = eixos.plot(lambda x: np.cos(x),color=BLUE)
+        texto_1 = MathTex(r'f(x)=\cos(x)').move_to([0,3.5,0])
+
+        cosseno_2 = eixos.plot(lambda x: np.cos(x)+np.cos(1.1*x),color=BLUE)
+
+        cosseno_3= eixos.plot(lambda x: (np.cos(x)+np.cos(1.1*x)+np.cos(1.2*x))/2,color=BLUE)
+
+        cosseno_4 = eixos.plot(lambda x: (np.cos(x)+np.cos(1.1*x)+np.cos(1.2*x)+np.cos(1.3*x))/3,color=BLUE)
+
+        cosseno_5 = eixos.plot(lambda x: (np.cos(x)+np.cos(1.1*x)+np.cos(1.2*x)+np.cos(1.3*x)+np.cos(1.4*x))/4,color=BLUE)
+
+        cosseno_6 = eixos.plot(lambda x: (np.cos(x)+np.cos(1.1*x)+np.cos(1.2*x)+np.cos(1.3*x)+np.cos(1.4*x)+np.cos(1.5*x))/5,color=BLUE)
+
+        cosseno_7 = eixos.plot(lambda x: (np.cos(x)+np.cos(1.1*x)+np.cos(1.2*x)+np.cos(1.3*x)+np.cos(1.4*x)+np.cos(1.5*x)+np.cos(1.6*x))/6,color=BLUE)
+
+        texto_2= MathTex(r'f(x)=\cos(x)+\cos(1.1x)').move_to([0,3.5,0])
+
+        texto_3 = MathTex(r'f(x)=\frac{1}{2} \sum_{j=0}^{2} cos([1+0.1j]x)').move_to([0,3,0])
+
+        texto_4 = MathTex(r'f(x)=\frac{1}{3} \sum_{j=0}^{3} cos([1+0.1j]x)').move_to([0,3,0])
+
+        texto_5 = MathTex(r'f(x)=\frac{1}{4} \sum_{j=0}^{4} cos([1+0.1j]x)').move_to([0,3,0])
+
+        texto_6 = MathTex(r'f(x)=\frac{1}{5} \sum_{j=0}^{5} cos([1+0.1j]x)').move_to([0,3,0])
+
+        texto_7 = MathTex(r'f(x)=\frac{1}{6} \sum_{j=0}^{6} cos([1+0.1j]x)').move_to([0,3,0])
+
+        grupo = VGroup(cosseno_2,texto_2)
+        self.add(grupo)
+
+
+        self.play(Transform(cosseno_2,cosseno_3),Transform(texto_2,texto_3))
+        self.wait(0.5)
+        self.play(Transform(cosseno_2,cosseno_4),Transform(texto_2,texto_4))
+        self.wait(0.5)
+        self.play(Transform(cosseno_2,cosseno_5),Transform(texto_2,texto_5))
+        self.wait(0.5)
+        self.play(Transform(cosseno_2,cosseno_6),Transform(texto_2,texto_6))
+        self.wait(0.5)
+        self.play(Transform(cosseno_2,cosseno_7),Transform(texto_2,texto_7))
+        self.wait(0.5)
+        self.wait(2)
