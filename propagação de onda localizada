@@ -1,0 +1,33 @@
+from manim import *
+
+class ProjetoIC(Scene):
+    def construct(self):
+        # Criando os eixos
+        eixos = Axes(
+            x_range=[-5, 5, 1],
+            y_range=[-1.5, 1.5, 0.5]
+        )
+        
+        # Criando um ValueTracker para o tempo
+        time_tracker = ValueTracker(0)
+
+        # Definição do pacote de ondas
+        def wave_function(x):
+            A = 1  # Amplitude
+            alpha = 1  # Controla a largura do pacote
+            k = 5 * np.pi  # Número de onda
+            v = 0.5   # Velocidade de propagação
+            t = time_tracker.get_value()
+            x0 = -5  # Posição inicial do centro do pacote
+            return A * np.exp(-alpha * ((x - v * t) - x0) ** 2) * np.cos(k * ((x - v * t) - x0))
+
+        # Criando a onda com always_redraw para atualizar a cada frame
+        wave = always_redraw(
+            lambda: eixos.plot(wave_function, color=BLUE)
+        )
+
+        # Adicionando os elementos à cena
+        self.add(wave)
+
+        # Animando a propagação do pacote de ondas
+        self.play(time_tracker.animate.set_value(20), run_time=20, rate_func=linear)
