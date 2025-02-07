@@ -1,0 +1,67 @@
+from manim import *
+import numpy as np
+
+class ProjetoIC(Scene):
+    def construct(self):
+        # Configurar os eixos e o primeiro gráfico (reduzido)
+        eixos_cosseno = Axes(
+            x_range=[-200, 200], y_range=[-4, 4], tips=False
+        )
+        eixos_cosseno.scale(0.5).to_corner(LEFT + DOWN)
+
+        cosseno = eixos_cosseno.plot(lambda x: np.cos(x), color=BLUE)
+        self.add(eixos_cosseno, cosseno)
+
+        # Configurar os eixos para o gráfico de amplitude em função de k
+        eixos_k = Axes(
+            x_range=[1, 2, 0.2], y_range=[0, 1.5, 0.5],
+            x_length=6, y_length=3, tips=False
+        )
+        eixos_k.to_corner(RIGHT + DOWN)
+        eixos_k.add_coordinates()  # Adiciona números ao eixo corretamente
+        eixos_k_labels = eixos_k.get_axis_labels(
+            x_label="k", y_label="A(k)"
+        )
+        self.add(eixos_k, eixos_k_labels)
+
+        # Adicionar o texto inicial
+        texto = MathTex(r'\cos(x)').move_to([0,3,0])
+        self.add(texto)
+
+        # Função inicial
+        funcao_atual = lambda x: np.cos(x)
+
+        # Inicializar pontos para o gráfico de amplitude
+        pontos = VGroup()
+
+        for i in range(1, 50):  # Adicionar até 10 termos
+            # Atualiza a função com o próximo termo
+            k_valor = 1.0 + 0.01 * i
+            funcao_atual = lambda x, f=funcao_atual, k=k_valor: f(x) + np.cos(k * x)
+
+            # Atualiza o texto com a notação de somatório
+            novo_texto = MathTex(
+                r'\sum_{k=0}^{' + f'{i}' + r'} \cos((1 + 0.01k)x)'
+            ).move_to([0,3,0])
+
+            # Atualiza o gráfico principal
+            novo_cosseno = eixos_cosseno.plot(funcao_atual, color=BLUE)
+
+            # Adiciona um ponto ao gráfico de amplitude
+            novo_ponto = Dot(
+                eixos_k.c2p(k_valor, 1), color=RED
+            )
+            pontos.add(novo_ponto)
+
+            # Animações: transforma o texto, o gráfico e adiciona pontos
+            self.play(
+                Transform(texto, novo_texto),
+                Transform(cosseno, novo_cosseno),
+                Create(novo_ponto),
+                run_time=0.8
+            )
+            self.wait(0.5)
+
+        # Adicionar os pontos ao final
+        self.add(pontos)
+        self.wait(10)
