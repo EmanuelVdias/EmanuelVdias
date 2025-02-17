@@ -1,0 +1,59 @@
+from manim import *
+import numpy as np
+
+class PrincipioIncerteza(Scene):
+    def construct(self):
+        eixo_x = Axes(
+            x_range=[-5, 5, 1],
+            y_range=[-1.5, 1.5, 0.5],
+            axis_config={"color": WHITE},
+            x_length=7, y_length=4
+        ).to_edge(LEFT)
+        
+        eixo_k = Axes(
+            x_range=[7, 16, 1],
+            y_range=[0, 1, 0.25],
+            axis_config={"color": WHITE, "include_numbers": True},
+            x_length=5, y_length=3
+        ).to_edge(RIGHT)
+        
+        eixo_x_label = eixo_x.get_axis_labels("x", "\\psi(x)")
+        eixo_k_label = eixo_k.get_axis_labels("k", "A(k)")
+        
+        def onda_superposta(x, n_max):
+            return sum([(1/8) * np.cos(k * np.pi * x) for k in np.arange(10, n_max, 0.25)])
+        
+        onda_graficos = [eixo_x.plot(lambda x, n=n: onda_superposta(x, n), color=BLUE) for n in np.arange(10, 13.25, 0.25)]
+        
+        pontos_k = [Dot(eixo_k.c2p(k, 0.25), color=GREEN) for k in np.arange(10, 13.25, 0.25)]
+        
+        self.add(eixo_k, eixo_x, onda_graficos[0], pontos_k[0], eixo_k_label)
+        
+        for i in range(1, len(onda_graficos)):
+            self.play(Transform(onda_graficos[0], onda_graficos[i]), Create(pontos_k[i]))
+            self.wait(1)
+        
+        self.wait(4)
+        # self.play(Transform(onda_grafico,onda_grafico_5),Create(ponto_k5))
+        # self.wait(3)
+
+
+
+
+
+        # # Animação de superposição de ondas
+        # def onda_superposta(x, n_ondas=5):
+        #     return sum([np.sin(2 * np.pi * k * x) * np.exp(-0.1 * k**2) for k in range(-n_ondas, n_ondas+1)])
+        
+        # def espectro_largo(k, largura=5):
+        #     return np.exp(-0.1 * k**2)  # Gaussiana mais larga
+        
+        # onda_superposta_grafico = eixo_x.plot(lambda x: onda_superposta(x, 10), color=RED)
+        # espectro_largo_grafico = eixo_k.plot(lambda k: espectro_largo(k, 10), color=YELLOW)
+        
+        # # Animação
+        # self.play(Create(eixo_x), Create(eixo_k), Write(eixo_x_label), Write(eixo_k_label))
+        # self.play(Create(onda_grafico), Create(espectro_grafico))
+        # self.wait(3)
+        # self.play(Transform(onda_grafico, onda_superposta_grafico), Transform(espectro_grafico, espectro_largo_grafico))
+        # self.wait(2)
