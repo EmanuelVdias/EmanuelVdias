@@ -1,0 +1,43 @@
+from manim import *
+
+class PrincipioIncerteza(Scene):
+    def construct(self):
+        texto = Tex(r'A interpretação de Born').to_edge(UP)
+        self.play(Write(texto), run_time=5)
+        
+         # Criando os eixos
+        axes = Axes(
+            x_range=[-4, 4, 1],
+            y_range=[-2, 2, 1],
+            axis_config={"color": WHITE},
+        )
+
+        # Criando um ValueTracker para o tempo
+        time_tracker = ValueTracker(0)
+
+        # Função cosseno que se propaga para a direita
+        wave = always_redraw(
+            lambda: axes.plot(
+                lambda x: np.cos(2 * np.pi * (x - time_tracker.get_value())),
+                color=BLUE
+            )
+        )
+
+        # Adicionando os elementos à cena
+        texto_psi = MathTex(r'\Psi(x,t)').move_to([3,-2,0])
+        texto_constante = MathTex(r'\Psi(x,t)^{*}\Psi(x,t)').move_to([3,-2,0])
+        self.play(Create(wave),Create(axes),Write(texto_psi))
+
+        # Animando a onda propagando ao longo do tempo
+        self.play(time_tracker.animate.set_value(15), run_time=5, rate_func=linear)
+        self.wait(2)
+        constante = axes.plot(lambda x: 1,color=RED)
+        wave.clear_updaters()
+        self.play(Transform(wave,constante),Transform(texto_psi,texto_constante))
+        self.wait(2)
+        area = axes.get_area(constante,x_range=[-4,4],color=YELLOW,opacity=0.5)
+        self.play(FadeIn(area))
+        self.wait(2)
+        exto_area = MathTex(r' P=\int_{-\infty}^{\infty} \Psi(x,t)^{*}\Psi(x,t)dx= \infty',color=RED).move_to([0,-1,0])
+        self.play(Write(exto_area),)
+        self.wait(7)
