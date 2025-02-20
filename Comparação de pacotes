@@ -1,0 +1,35 @@
+from manim import *
+import numpy as np
+
+class texto(Scene):
+    def construct(self):
+        eixo_1 = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1).move_to([0,2,0])
+        eixo_2 = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=0.5).move_to([0,-2,0])
+        func1 = eixo_1.plot(lambda x: np.cos(10*x)+np.cos(11*x),color=ORANGE)
+        func2 = eixo_2.plot(lambda x: np.cos(10*x)+np.cos(11*x)+np.cos(12*x)+np.cos(13*x)+np.cos(14*x)+np.cos(15*x),color=ORANGE)
+
+
+        linha_1 = DoubleArrow(start=[-5,-1,0],end=[-1,-1,0],color=WHITE)
+        linha_2 = DoubleArrow(start=[-4,1,0],end=[-2,1,0],color=WHITE)
+
+        linha_3 = DoubleArrow(start=[-1,-0.4,0],end=[1,-0.4,0])
+        linha_4 = DoubleArrow(start=[-2.5,3,0],end=[2.5,3,0])
+       
+        self.play(DrawBorderThenFill(func1),DrawBorderThenFill(func2))
+        self.wait(2)
+        self.play(DrawBorderThenFill(linha_1),DrawBorderThenFill(linha_2))
+
+        texto_1 = Tex(r'A distância entre pacotes aumenta').move_to([-3,0,0])
+        self.wait(1)
+        self.play(Write(texto_1))
+        self.wait(4)
+        grupo_1 = VGroup(linha_1,linha_2,texto_1)
+        self.play(FadeOut(grupo_1))
+        self.wait(0.5)
+        texto_2 = Tex(r'O comprimento dos pacotes diminui').move_to([0,0.4,0])
+        self.play(DrawBorderThenFill(linha_3),DrawBorderThenFill(linha_4))
+        self.wait(1)
+        self.play(Write(texto_2))
+        self.wait(4)
+        self.play(FadeOut(linha_3),FadeOut(linha_4),FadeOut(texto_2))
+        self.wait(4)
