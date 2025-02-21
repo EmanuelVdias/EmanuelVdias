@@ -1,0 +1,152 @@
+from manim import *
+import numpy as np
+
+class WideningWave2(Scene):
+    def construct(self):
+        # Texto a ser exibido
+        eixo_0 = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1)
+        eixo_1 = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1).to_edge(UP)
+        eixo_2 = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1).next_to(eixo_1,DOWN)
+        eixo_3 = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1).next_to(eixo_2,DOWN)
+        eixo_4 = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1).next_to(eixo_3,DOWN)
+        eixo_5 = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1).next_to(eixo_4,DOWN)
+        eixo_6 = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1).next_to(eixo_5,DOWN)
+        cosseno = eixo_1.plot(lambda x: np.cos(10*x),color=BLUE)
+        cosseno_2 = eixo_2.plot(lambda x: np.cos(11*x),color=RED)
+        cosseno_3 = eixo_3.plot(lambda x: np.cos(12*x),color=YELLOW)
+        cosseno_4 = eixo_4.plot(lambda x: np.cos(13*x),color=GREEN)
+        cosseno_5 = eixo_5.plot(lambda x: np.cos(14*x),color=PINK)
+        cosseno_6 = eixo_6.plot(lambda x: np.cos(15*x),color=ORANGE)
+
+        cosseno_11x = eixo_6.plot(lambda x: np.cos(11*x),color=ORANGE)
+        # grupo 2 
+
+        
+        eixo_1s = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1)
+        eixo_2s = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1)
+        eixo_3s = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1)
+        eixo_4s = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1)
+        eixo_5s = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1)
+        eixo_6s = Axes(x_range=[-6.28,6.28],y_range=[-1,1],y_length=1)
+        cossenos = eixo_1s.plot(lambda x: np.cos(10*x),color=BLUE)
+        cosseno_2s = eixo_2s.plot(lambda x: np.cos(11*x),color=RED)
+        cosseno_3s = eixo_3s.plot(lambda x: np.cos(12*x),color=YELLOW)
+        cosseno_4s = eixo_4s.plot(lambda x: np.cos(13*x),color=GREEN)
+        cosseno_5s = eixo_5s.plot(lambda x: np.cos(14*x),color=PINK)
+        cosseno_6s = eixo_6s.plot(lambda x: np.cos(15*x),color=ORANGE)
+
+        grupo_2 = VGroup(cossenos,cosseno_2s,cosseno_3s,cosseno_4s,cosseno_5s,cosseno_6s).scale(0.4).move_to([-3.8,1.8,0])
+
+        grupo_intermediario = VGroup(cosseno,cosseno_11x)
+        grupo_intermediario2 = VGroup(cossenos,cosseno_2s)
+
+        grupo_1 = VGroup(cosseno,cosseno_2,cosseno_3,cosseno_4,cosseno_5,cosseno_6).scale(0.4).move_to([-3.8,1.8,0])
+
+        cosseno_somado2 = eixo_0.plot(lambda x: np.cos(10*x)+np.cos(11*x)).set_color_by_gradient(BLUE,GREEN,ORANGE)
+        cosseno_somado = eixo_0.plot(lambda x: np.cos(10*x)+np.cos(11*x)+np.cos(12*x)+np.cos(13*x)+np.cos(14*x)+np.cos(15*x)).scale(0.4).move_to([-3.8,1.8,0])
+        cosseno_somado.set_color_by_gradient(BLUE,GREEN,ORANGE)
+
+        
+        
+        #textos
+
+        texto_1 = MathTex(r'\cos(10x)',font_size=30).move_to([-0.5,3.1,0])
+        texto_2 = MathTex(r'\cos(11x)',font_size=30).move_to([-0.5,2.6,0])
+        texto_3 = MathTex(r'\cos(12x)',font_size=30).move_to([-0.5,2.1,0])
+        texto_4 = MathTex(r'\cos(13x)',font_size=30).move_to([-0.5,1.5,0])
+        texto_5 = MathTex(r'\cos(14x)',font_size=30).move_to([-0.5,1,0])
+        texto_6 = MathTex(r'\cos(15x)',font_size=30).move_to([-0.5,0.5,0])
+
+        
+        
+        grupo_Texto = VGroup(texto_1,texto_2,texto_3,texto_4,texto_5,texto_6)
+        eixos_2 = Axes(x_range=[7,16],y_range=[0,2],axis_config={"include_numbers":True}).move_to([3.7,1.8,0]).scale(0.5)
+
+        x_label = eixos_2.get_x_axis_label("k")
+        y_label = eixos_2.get_y_axis_label("A(k)")
+
+        texto_1b = Tex(r'$A(k)=1$ para todo $k$, o gráfico a direita é $A(k)$ em função de $k$').move_to([0,-1,0]).scale(0.9)
+        
+       
+
+        
+
+        # retas
+
+        reta_cosseno10 = Line(eixos_2.coords_to_point(10,0),eixos_2.coords_to_point(10,1),color=BLUE)
+        reta_cosseno11 = Line(eixos_2.coords_to_point(11,0),eixos_2.coords_to_point(11,1),color=RED)
+        reta_cosseno12 = Line(eixos_2.coords_to_point(12,0),eixos_2.coords_to_point(12,1),color=YELLOW)
+        reta_cosseno13 = Line(eixos_2.coords_to_point(13,0),eixos_2.coords_to_point(13,1),color=GREEN)
+        reta_cosseno14 = Line(eixos_2.coords_to_point(14,0),eixos_2.coords_to_point(14,1),color=PINK)
+        reta_cosseno15 = Line(eixos_2.coords_to_point(15,0),eixos_2.coords_to_point(15,1),color=ORANGE)
+        
+        grupo_retas = VGroup(reta_cosseno10,reta_cosseno11,reta_cosseno12,reta_cosseno13,reta_cosseno14,reta_cosseno15)
+
+        self.add(grupo_1,eixos_2,x_label,y_label, texto_1b,grupo_retas,grupo_Texto)
+        self.wait(3)
+        
+        self.play(FadeOut(texto_1b))
+
+        
+        
+        self.play(Transform(grupo_1,grupo_2))
+        self.wait(1)
+        self.play(Transform(grupo_1,cosseno_somado),FadeOut(grupo_Texto))
+        self.wait(2)
+        texto_kk = Tex(r'Uma soma discreta de ondas produz pacotes periódicos').move_to([0,-1,0]).scale(0.9)
+        self.play(Write(texto_kk),run_time=5)
+        self.wait(2)
+
+        reta_cosseno16 = Line(eixos_2.coords_to_point(10.5,0),eixos_2.coords_to_point(10.5,1),color=WHITE)
+        cosseno_somado2 = eixo_0.plot(lambda x: np.cos(10*x)+np.cos(10.5*x)+np.cos(11*x)+np.cos(12*x)+np.cos(13*x)+np.cos(14*x)+np.cos(15*x),color=ORANGE).scale(0.4).move_to([-3.8,1.8,0])
+        self.play(DrawBorderThenFill(reta_cosseno16))
+        self.wait(0.5)
+        self.play(Transform(grupo_1,cosseno_somado2))
+        self.wait(0.5)
+
+        reta_cosseno17 = Line(eixos_2.coords_to_point(11.5,0),eixos_2.coords_to_point(11.5,1),color=WHITE)
+        cosseno_somado3 = eixo_0.plot(lambda x: np.cos(10*x)+np.cos(10.5*x)+np.cos(11*x)+np.cos(11.5*x)+np.cos(12*x)+np.cos(13*x)+np.cos(14*x)+np.cos(15*x),color=ORANGE).scale(0.4).move_to([-3.8,1.8,0])
+        self.play(DrawBorderThenFill(reta_cosseno17))
+        self.wait(0.5)
+        self.play(Transform(grupo_1,cosseno_somado3))
+
+        self.wait(0.5)
+
+        texto_kk2 = Tex(r'Quanto menos discreto é o espectro, mais distante fica os pacotes').move_to([0,-1,0]).scale(0.9)
+        
+
+
+        
+        reta_cosseno18 = Line(eixos_2.coords_to_point(12.5,0),eixos_2.coords_to_point(12.5,1),color=WHITE)
+        cosseno_somado4 = eixo_0.plot(lambda x: np.cos(10*x)+np.cos(10.5*x)+np.cos(11*x)+np.cos(11.5*x)+np.cos(12*x)+np.cos(12.5*x)+np.cos(13*x)+np.cos(14*x)+np.cos(15*x),color=ORANGE).scale(0.4).move_to([-3.8,1.8,0])
+        self.play(DrawBorderThenFill(reta_cosseno18))
+        self.wait(0.5)
+        self.play(Transform(grupo_1,cosseno_somado4))
+
+        self.wait(0.5)
+
+        reta_cosseno19 = Line(eixos_2.coords_to_point(13.5,0),eixos_2.coords_to_point(13.5,1),color=WHITE)
+        cosseno_somado5 = eixo_0.plot(lambda x: np.cos(10*x)+np.cos(10.5*x)+np.cos(11*x)+np.cos(11.5*x)+np.cos(12*x)+np.cos(12.5*x)+np.cos(13*x)+np.cos(13.5*x )+np.cos(14*x)+np.cos(15*x),color=ORANGE).scale(0.4).move_to([-3.8,1.8,0])
+        self.play(DrawBorderThenFill(reta_cosseno19))
+        self.wait(0.5)
+        self.play(Transform(grupo_1,cosseno_somado5))
+
+        self.wait(0.5)
+        self.play(Transform(texto_kk,texto_kk2))
+        self.wait(1)
+
+        reta_cosseno20 = Line(eixos_2.coords_to_point(14.5,0),eixos_2.coords_to_point(14.5,1),color=WHITE)
+        cosseno_somado6 = eixo_0.plot(lambda x: np.cos(10*x)+np.cos(10.5*x)+np.cos(11*x)+np.cos(11.5*x)+np.cos(12*x)+np.cos(12.5*x)+np.cos(13*x)+np.cos(13.5)+np.cos(14*x)+np.cos(14.5*x)+np.cos(15*x),color=ORANGE).scale(0.4).move_to([-3.8,1.8,0])
+        self.play(DrawBorderThenFill(reta_cosseno20))
+        self.wait(0.5)
+        self.play(Transform(grupo_1,cosseno_somado6))
+        self.wait(3)
+        texto_kk3 = Tex(r'\text{Note que, com um espectro contínuo de valores de $k$,}\\ \text{temos finalmente uma onda localizada!}').move_to([0,-1,0]).scale(0.9)
+        retangulo = Rectangle(width=3.3, height=1.5,color=ORANGE,fill_color = ORANGE,fill_opacity=1).move_to([4.45,1.2,0])
+        
+        fim = eixo_0.plot(lambda x: (np.sin(15*x)-np.sin(10*x))/x,color=ORANGE).scale(0.4).move_to([-3.8,1.8,0])
+        self.play(DrawBorderThenFill(retangulo, run_time=5),Transform(grupo_1,fim,run_time=5),Transform(texto_kk,texto_kk3,run_time=5))
+        
+        self.wait(5)
+       
+    
